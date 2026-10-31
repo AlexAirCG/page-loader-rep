@@ -1,0 +1,35 @@
+{
+  "name": "page-loader-rep",
+  "version": "1.0.0",
+  "description": "program for downloading pages",
+  "keywords": [],
+  "homepage": "https://github.com/AlexAirCG/page-loader-rep#readme",
+  "bugs": {
+    "url": "https://github.com/AlexAirCG/page-loader-rep/issues"
+  },
+  "license": "ISC",
+  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlexAirCG/page-loader-rep.git"
+  },
+  "bin": {
+    "page-loader-rep": "bin/cli.js"
+  },
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "vitest run",
+    "lint": "oxlint",
+    "format": "oxfmt --write",
+    "format:check": "oxfmt --check"
+  },
+  "dependencies": {
+    "commander": "^15.0.0"
+  },
+  "devDependencies": {
+    "oxfmt": "^0.75.0",
+    "oxlint": "^1.90.0",
+    "vitest": "^5.0.5"
+  }
+}
