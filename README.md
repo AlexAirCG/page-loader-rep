@@ -1,4 +1,4 @@
-# pege-loader-rep
+# page-loader-rep
 
 [![CI](https://github.com/AlexAirCG/page-loader-rep/actions/workflows/ci.yml/badge.svg)](https://github.com/AlexAirCG/page-loader-rep/actions)
 
@@ -16,12 +16,12 @@ npm link
 ## Использование
 
 ```bash
-my-cli [options] [name]
+page-loader-rep [--output <dir>] <url>
 ```
 
 Примеры:
 
 ```bash
-my-cli
-my-cli Alex --upper
+  page-loader-rep https://ru.hexlet.io/courses
+  page-loader-rep --output /tmp https://ru.hexlet.io/courses
 ```

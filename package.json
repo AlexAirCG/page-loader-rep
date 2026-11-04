@@ -14,7 +14,7 @@
     "url": "git+https://github.com/AlexAirCG/page-loader-rep.git"
   },
   "bin": {
-    "page-loader-rep": "bin/cli.js"
+    "page-loader-rep": "bin/page-loader-rep.js"
   },
   "type": "module",
   "main": "src/index.js",
@@ -25,9 +25,12 @@
     "format:check": "oxfmt --check"
   },
   "dependencies": {
+    "axios": "^1.21.0",
+    "cheerio": "^1.2.0",
     "commander": "^15.0.0"
   },
   "devDependencies": {
+    "nock": "^15.0.5",
     "oxfmt": "^0.75.0",
     "oxlint": "^1.90.0",
     "vitest": "^5.0.5"

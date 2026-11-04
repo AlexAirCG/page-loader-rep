@@ -1,1 +1,42 @@
-export const greet = (name = 'world') => `Hello, ${name}!`
+import fs from 'fs/promises'
+import path from 'path'
+import axios from 'axios'
+import * as cheerio from 'cheerio'
+import { makeFileName, makeResourceFileName } from './utils.js'
+
+const loadPage = (urlString, outputDir = process.cwd()) => {
+  const fileName = makeFileName(urlString)
+  const fullPath = path.join(outputDir, fileName)
+  const resourcesDirName = fileName.replace(/\.html$/, '_files')
+  const resourcesDirPath = path.join(outputDir, resourcesDirName)
+  const images = []
+  let $
+
+  return axios(urlString)
+    .then((response) => {
+      $ = cheerio.load(response.data)
+      $('img').each((_, element) => {
+        const src = $(element).attr('src')
+        const imageUrl = new URL(src, urlString).toString()
+        const resourceFileName = makeResourceFileName(imageUrl)
+        $(element).attr('src', `${resourcesDirName}/${resourceFileName}`)
+        images.push({ imageUrl, resourceFileName })
+      })
+    })
+    .then(() => fs.mkdir(resourcesDirPath, { recursive: true }))
+    .then(() =>
+      Promise.all(
+        images.map(({ imageUrl, resourceFileName }) =>
+          axios
+            .get(imageUrl, { responseType: 'arraybuffer' })
+            .then((response) =>
+              fs.writeFile(path.join(resourcesDirPath, resourceFileName), response.data),
+            ),
+        ),
+      ),
+    )
+    .then(() => fs.writeFile(fullPath, $.html()))
+    .then(() => fullPath)
+}
+
+export default loadPage
