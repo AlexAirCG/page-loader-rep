@@ -24,19 +24,26 @@ const loadPage = (urlString, outputDir = process.cwd()) => {
       })
     })
     .then(() => fs.mkdir(resourcesDirPath, { recursive: true }))
-    .then(() =>
-      Promise.all(
-        images.map(({ imageUrl, resourceFileName }) =>
-          axios
+    .then(() => {
+      return Promise.all(
+        images.map(({ imageUrl, resourceFileName }) => {
+          return axios
             .get(imageUrl, { responseType: 'arraybuffer' })
             .then((response) =>
               fs.writeFile(path.join(resourcesDirPath, resourceFileName), response.data),
-            ),
-        ),
-      ),
-    )
+            )
+        }),
+      )
+    })
     .then(() => fs.writeFile(fullPath, $.html()))
     .then(() => fullPath)
 }
 
 export default loadPage
+
+// 1. проверить адрес и папку назначения
+// 2. скачать страницу
+// 3. найти свои ресурсы и заменить ссылки (список resources)
+// 4. создать папку для ресурсов
+// 5. скачать все ресурсы и записать в папку
+// 6. записать страницу и вернуть путь к ней
